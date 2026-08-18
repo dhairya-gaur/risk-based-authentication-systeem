@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RBA CyberShield | Role-Based Access Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="page2.html">
+<style>
+:root{
+  --bg:#070b14; --panel:#0d1422; --panel2:#111b2c; --text:#edf5ff;
+  --muted:#9aaac0; --cyan:#36e7ff; --purple:#8b5cf6; --green:#45f0a3;
+  --border:rgba(255,255,255,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,system-ui,sans-serif;color:var(--text);background:
+  radial-gradient(circle at 15% 10%,rgba(54,231,255,.12),transparent 30%),
+  radial-gradient(circle at 85% 20%,rgba(139,92,246,.14),transparent 30%),var(--bg);
+  line-height:1.6;
+}
+a{text-decoration:none;color:inherit}
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(7,11,20,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1150px;margin:auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:"Space Grotesk";font-size:1.35rem;font-weight:700}.logo span{color:var(--cyan)}
+.links{display:flex;gap:26px;color:#b7c4d8;font-size:.92rem}.links a:hover{color:var(--cyan)}
+.hero{min-height:100vh;display:grid;place-items:center;padding:130px 24px 80px;position:relative;overflow:hidden}
+.hero-grid{max-width:1150px;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(54,231,255,.25);background:rgba(54,231,255,.06);padding:8px 13px;border-radius:999px;color:#a9f6ff;font-size:.82rem;margin-bottom:20px}
+.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 14px var(--green)}
+h1{font-family:"Space Grotesk";font-size:clamp(3rem,7vw,5.7rem);line-height:.98;letter-spacing:-.06em}
+.gradient{background:linear-gradient(100deg,var(--cyan),#b8f7ff 40%,#a78bfa);-webkit-background-clip:text;color:transparent}
+.hero p{max-width:650px;color:var(--muted);font-size:1.08rem;margin:25px 0 30px}
+.buttons{display:flex;gap:14px;flex-wrap:wrap}.btn{padding:13px 19px;border-radius:11px;font-weight:700;border:1px solid var(--border);transition:.2s}
+.primary{background:var(--cyan);color:#031018}.primary:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(54,231,255,.2)}
+.secondary:hover{border-color:rgba(54,231,255,.45)}
+.dashboard{position:relative;background:linear-gradient(145deg,rgba(17,27,44,.95),rgba(9,15,27,.95));border:1px solid var(--border);border-radius:24px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.45);animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+.window{display:flex;gap:7px;margin-bottom:20px}.window i{width:9px;height:9px;border-radius:50%;background:#46556d}
+.status{display:flex;justify-content:space-between;align-items:center;background:#0a1220;padding:14px;border-radius:14px;margin-bottom:12px}
+.status strong{font-size:.92rem}.online{color:var(--green);font-size:.78rem}
+.access{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{background:#0b1422;border:1px solid var(--border);padding:16px;border-radius:14px}
+.icon{font-size:1.4rem;margin-bottom:8px}.card small{color:var(--muted)}.card b{display:block;margin-top:4px}
+section{padding:100px 24px}.container{max-width:1150px;margin:auto}
+.section-head{max-width:700px;margin-bottom:45px}.eyebrow{color:var(--cyan);font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;font-weight:800}
+h2{font-family:"Space Grotesk";font-size:clamp(2rem,4vw,3.2rem);line-height:1.05;margin:10px 0 15px}
+.section-head p{color:var(--muted)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feature{padding:27px;background:rgba(13,20,34,.75);border:1px solid var(--border);border-radius:18px;transition:.25s}
+.feature:hover{transform:translateY(-5px);border-color:rgba(54,231,255,.28)}
+.feature h3{margin:12px 0 8px}.feature p{color:var(--muted);font-size:.93rem}
+.arch{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+.diagram{padding:28px;border-radius:20px;background:#0b1220;border:1px solid var(--border)}
+.flow{display:flex;flex-direction:column;gap:12px}.flow-item{padding:15px;border-radius:12px;background:#101a2b;border-left:3px solid var(--cyan)}
+.flow-item span{color:var(--muted);font-size:.83rem;display:block}
+.checks{display:grid;gap:12px;margin-top:18px}.check{display:flex;gap:11px;color:#c9d5e5}.check b{color:var(--green)}
+.demo{background:linear-gradient(135deg,rgba(54,231,255,.08),rgba(139,92,246,.08));border:1px solid var(--border);border-radius:24px;padding:35px;display:grid;grid-template-columns:1fr .8fr;gap:35px}
+.demo-form{display:grid;gap:12px}.demo-form label{font-size:.83rem;color:#aab8ca}.demo-form input,.demo-form select{width:100%;background:#080f1c;color:var(--text);border:1px solid var(--border);padding:13px;border-radius:10px;outline:none}.demo-form input:focus,.demo-form select:focus{border-color:var(--cyan)}
+.result{display:grid;place-items:center;min-height:240px;border:1px dashed rgba(54,231,255,.3);border-radius:18px;text-align:center;padding:25px;background:rgba(5,12,23,.5)}
+.result .shield{font-size:3.2rem}.result h3{margin:8px 0}.result p{color:var(--muted);font-size:.9rem}
+footer{padding:35px 24px;border-top:1px solid var(--border);color:#73839a;text-align:center;font-size:.85rem}
+@media(max-width:800px){.links{display:none}.hero-grid,.arch,.demo{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}.hero{padding-top:120px}h1{font-size:3.3rem}.dashboard{max-width:600px;margin:auto}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#features">Features</a>
+    <a href="#demo">Demo</a>
+    <a href="ip-checker.html">IP Checker</a>
+</div>
+</nav>
+
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="badge"><span class="dot"></span> MINI PROJECT · CYBER SECURITY</div>
+      <h1>Secure access.<br><span class="gradient">Smarter control.</span></h1>
+      <p>RBA — Role-Based Access Control — is a cybersecurity approach that gives users only the permissions required for their role, reducing unauthorized access and improving system security.</p>
+      <div class="buttons">
+        <a class="btn primary" href="#demo">Try the Demo →</a>
+        <a class="btn secondary" href="#architecture">Explore Architecture</a>
+      </div>
+    </div>
+    <div class="dashboard">
+      <div class="window"><i></i><i></i><i></i></div>
+      <div class="status"><strong>ACCESS CONTROL SYSTEM</strong><span class="online">● SYSTEM ACTIVE</span></div>
+      <div class="access">
+        <div class="card"><div class="icon">🛡️</div><small>ROLE</small><b>Administrator</b></div>
+        <div class="card"><div class="icon">🔐</div><small>ACCESS</small><b>Full Control</b></div>
+        <div class="card"><div class="icon">👤</div><small>USERS</small><b>128 Active</b></div>
+        <div class="card"><div class="icon">⚡</div><small>THREATS</small><b>0 Detected</b></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+<div class="container">
+  <div class="section-head"><div class="eyebrow">01 / The Concept</div><h2>Why Role-Based Access?</h2><p>Instead of managing permissions for every user individually, RBA groups permissions around job roles. This makes access easier to manage, audit, and secure.</p></div>
+  <div class="grid3">
+    <div class="feature"><div class="icon">🎯</div><h3>Least Privilege</h3><p>Users receive only the access needed to perform their responsibilities, limiting unnecessary exposure.</p></div>
+    <div class="feature"><div class="icon">🧩</div><h3>Simple Management</h3><p>Assign a role once and manage its permissions centrally instead of configuring every account separately.</p></div>
+    <div class="feature"><div class="icon">📊</div><h3>Better Auditing</h3><p>Role and permission mappings make it easier to review who can access sensitive resources.</p></div>
+  </div>
+</div>
+</section>
+
+<section id="architecture">
+<div class="container">
+  <div class="section-head"><div class="eyebrow">02 / Architecture</div><h2>How RBA works</h2><p>A simple flow from identity to permission.</p></div>
+  <div class="arch">
+    <div class="diagram">
+      <div class="flow">
+        <div class="flow-item"><b>01 · USER</b><span>Employee / Student / Operator signs in.</span></div>
+        <div class="flow-item"><b>02 · AUTHENTICATION</b><span>System verifies the user's identity.</span></div>
+        <div class="flow-item"><b>03 · ROLE</b><span>User is mapped to an assigned role.</span></div>
+        <div class="flow-item"><b>04 · PERMISSIONS</b><span>Role determines allowed resources and actions.</span></div>
+      </div>
+    </div>
+    <div class="diagram">
+      <h3>Security principles</h3>
+      <div class="checks">
+        <div class="check"><b>✓</b> Centralized permission management</div>
+        <div class="check"><b>✓</b> Reduced privilege escalation risk</div>
+        <div class="check"><b>✓</b> Clear separation of responsibilities</div>
+        <div class="check"><b>✓</b> Easier access reviews and auditing</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="features">
+<div class="container">
+  <div class="section-head"><div class="eyebrow">03 / Core Features</div><h2>Built for secure systems.</h2></div>
+  <div class="grid3">
+    <div class="feature"><div class="icon">🔑</div><h3>Authentication</h3><p>Identify users before any protected resource is accessed.</p></div>
+    <div class="feature"><div class="icon">🛂</div><h3>Authorization</h3><p>Check whether the user's assigned role permits a requested action.</p></div>
+    <div class="feature"><div class="icon">📝</div><h3>Audit Logs</h3><p>Record access decisions to support monitoring and security reviews.</p></div>
+  </div>
+</div>
+</section>
+
+<section id="demo">
+<div class="container">
+  <div class="section-head"><div class="eyebrow">04 / Interactive Demo</div><h2>Test an access decision.</h2><p>Select a role and action to see a simplified RBA authorization result.</p></div>
+  <div class="demo">
+    <div class="demo-form">
+      <label for="role">Select Role</label>
+      <select id="role"><option>Administrator</option><option>Manager</option><option>Employee</option><option>Guest</option></select>
+      <label for="action">Requested Action</label>
+      <select id="action"><option>View dashboard</option><option>Edit user</option><option>Delete user</option><option>View reports</option></select>
+      <button class="btn primary" onclick="checkAccess()">Check Permission</button>
+    </div>
+    <div class="result" id="result">
+      <div><div class="shield">🛡️</div><h3>Ready to check</h3><p>Choose a role and requested action.</p></div>
+    </div>
+  </div>
+</div>
+</section>
+<section id="ip-location">
+    <div class="container">
+
+        <div class="section-head">
+            <div class="eyebrow">05 / IP INTELLIGENCE</div>
+
+            <h2>
+                Track IP Location
+            </h2>
+
+            <p>
+                Explore our IP Location Checker module to view
+                geographical and network information associated
+                with an IP address.
+            </p>
+        </div>
+
+        <div class="feature" style="
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:30px;
+            padding:35px;
+        ">
+
+            <div>
+                <div style="font-size:40px; margin-bottom:10px;">
+                    🌍
+                </div>
+
+                <h3 style="font-size:24px; margin-bottom:10px;">
+                    IP Location Checker
+                </h3>
+
+                <p>
+                    Check an IP address and explore its approximate
+                    location, ISP, region and network information.
+                </p>
+            </div>
+
+            <a href="ip-checker.html"
+               class="btn primary"
+               style="white-space:nowrap;">
+                Open IP Checker →
+            </a>
+
+        </div>
+
+    </div>
+</section>
+
+<footer>RBA CyberShield · Cyber Security Mini Project · Built with HTML & CSS + a small JavaScript demo</footer>
+
+<script>
+function checkAccess(){
+  const role=document.getElementById('role').value;
+  const action=document.getElementById('action').value;
+  const rules={
+    'Administrator':['View dashboard','Edit user','Delete user','View reports'],
+    'Manager':['View dashboard','Edit user','View reports'],
+    'Employee':['View dashboard','View reports'],
+    'Guest':['View dashboard']
+  };
+  const allowed=rules[role].includes(action);
+  document.getElementById('result').innerHTML=allowed
+    ? `<div><div class="shield">🟢</div><h3 style="color:#45f0a3">ACCESS GRANTED</h3><p>${role} is authorized to ${action.toLowerCase()}.</p></div>`
+    : `<div><div class="shield">🔴</div><h3 style="color:#ff7185">ACCESS DENIED</h3><p>${role} does not have permission to ${action.toLowerCase()}.</p></div>`;
+}
+</script>
+</body>
+</html>

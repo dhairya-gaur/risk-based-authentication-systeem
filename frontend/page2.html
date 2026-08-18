@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IP Location Checker | RBA CyberShield</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #070b14;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            background: rgba(7, 11, 20, 0.95);
+            border-bottom: 1px solid #1c2a3d;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .logo span {
+            color: #36e7ff;
+        }
+
+        nav a {
+            color: #9aaac0;
+            text-decoration: none;
+            margin-left: 30px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #36e7ff;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            text-align: center;
+            padding: 90px 20px 50px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 30px;
+            border: 1px solid rgba(54, 231, 255, 0.3);
+            color: #36e7ff;
+            background: rgba(54, 231, 255, 0.06);
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #36e7ff;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            color: #9aaac0;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .checker {
+            background: #0d1422;
+            border: 1px solid #1d2b40;
+            border-radius: 25px;
+            padding: 35px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .checker h2 {
+            margin-bottom: 10px;
+        }
+
+        .checker-description {
+            color: #8999ae;
+            margin-bottom: 25px;
+        }
+
+        /* ================= INPUT ================= */
+
+        .input-area {
+            display: flex;
+            gap: 12px;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #26384f;
+            background: #080f1c;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .input-area input:focus {
+            border-color: #36e7ff;
+            box-shadow: 0 0 15px rgba(54,231,255,0.15);
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            background: #36e7ff;
+            color: #031018;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* ================= RESULT ================= */
+
+        .result {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .result-card {
+            background: #0a1220;
+            border: 1px solid #1d2b40;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .result-card small {
+            color: #71839a;
+            display: block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .result-card strong {
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .secure {
+            color: #45f0a3 !important;
+        }
+
+        /* ================= INFO ================= */
+
+        .info-section {
+            padding: 40px 0 100px;
+        }
+
+        .info-section h2 {
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 32px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .info-card {
+            background: #0d1422;
+            border: 1px solid #1d2b40;
+            padding: 25px;
+            border-radius: 18px;
+            transition: 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: #36e7ff;
+        }
+
+        .icon {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            color: #8999ae;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            border-top: 1px solid #1c2a3d;
+            padding: 30px;
+            text-align: center;
+            color: #687990;
+            font-size: 14px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 700px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            nav a {
+                margin-left: 10px;
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .input-area {
+                flex-direction: column;
+            }
+
+            .result {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            RBA<span>_</span>CyberShield
+        </div>
+
+        <div>
+            <a href="index.html">Home</a>
+            <a href="#">IP Checker</a>
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="badge">
+            CYBER SECURITY TOOL · MODULE 02
+        </div>
+
+        <h1>
+            IP <span>Location</span> Checker
+        </h1>
+
+        <p>
+            Enter an IP address to view its geographical and network
+            information. This module demonstrates how IP intelligence
+            can be used as part of a cybersecurity monitoring system.
+        </p>
+
+    </section>
+
+
+    <!-- IP CHECKER -->
+
+    <main class="container">
+
+        <div class="checker">
+
+            <h2>🔎 Check an IP Address</h2>
+
+            <p class="checker-description">
+                Enter a public IPv4 or IPv6 address below.
+            </p>
+
+            <div class="input-area">
+
+                <input
+                    type="text"
+                    placeholder="Example: 8.8.8.8"
+                    value="8.8.8.8"
+                >
+
+                <button class="btn">
+                    Check IP
+                </button>
+
+            </div>
+
+
+            <!-- SAMPLE RESULT -->
+
+            <div class="result">
+
+                <div class="result-card">
+                    <small>IP Address</small>
+                    <strong>8.8.8.8</strong>
+                </div>
+
+                <div class="result-card">
+                    <small>Country</small>
+                    <strong>United States</strong>
+                </div>
+
+                <div class="result-card">
+                    <small>City</small>
+                    <strong>Mountain View</strong>
+                </div>
+
+                <div class="result-card">
+                    <small>Region</small>
+                    <strong>California</strong>
+                </div>
+
+                <div class="result-card">
+                    <small>ISP</small>
+                    <strong>Google LLC</strong>
+                </div>
+
+                <div class="result-card">
+                    <small>Status</small>
+                    <strong class="secure">● IP Identified</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- INFORMATION -->
+
+    <section class="info-section">
+
+        <div class="container">
+
+            <h2>What Can IP Intelligence Tell You?</h2>
+
+            <div class="info-grid">
+
+                <div class="info-card">
+
+                    <div class="icon">🌍</div>
+
+                    <h3>Geolocation</h3>
+
+                    <p>
+                        An IP address can provide approximate information
+                        about the country, region and city associated with
+                        an internet connection.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="icon">🌐</div>
+
+                    <h3>Network Information</h3>
+
+                    <p>
+                        IP intelligence can provide information such as
+                        the Internet Service Provider and autonomous
+                        network associated with an address.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="icon">🛡️</div>
+
+                    <h3>Security Monitoring</h3>
+
+                    <p>
+                        Security systems can use IP information as one
+                        signal when monitoring suspicious login attempts
+                        or unusual network activity.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        RBA CyberShield · IP Location Module · Cyber Security Mini Project
+
+    </footer>
+
+</body>
+</html>

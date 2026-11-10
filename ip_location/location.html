@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP Location Detector</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+  }
+  .card {
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  }
+  h1 {
+    font-size: 20px;
+    margin: 0 0 4px;
+  }
+  .subtitle {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #334155;
+    font-size: 14px;
+  }
+  .row:last-child { border-bottom: none; }
+  .label { color: #94a3b8; }
+  .value { font-weight: 600; text-align: right; }
+  .loading { text-align: center; color: #94a3b8; padding: 20px 0; }
+  button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #6366f1;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { background: #4f46e5; }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .error { color: #f87171; font-size: 13px; margin-top: 12px; }
+  .note {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 20px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Your Location</h1>
+  <div class="subtitle">Based on your device's public IP address</div>
+
+  <div id="content">
+    <div class="loading">Looking up location…</div>
+  </div>
+
+  <button id="preciseBtn" onclick="getPreciseLocation()">Use precise GPS location instead</button>
+  <div id="error" class="error"></div>
+
+  <div class="note">
+    IP-based location is approximate (usually city-level) and reflects your ISP or VPN exit point, not your exact address. For precise coordinates, the button above uses your browser's Geolocation API, which will ask your permission.
+  </div>
+</div>
+
+<script>
+async function loadIpLocation() {
+  const content = document.getElementById('content');
+  try {
+    const res = await fetch('https://ipapi.co/json/');
+    if (!res.ok) throw new Error('Request failed');
+    const data = await res.json();
+
+    content.innerHTML = `
+      <div class="row"><span class="label">IP Address</span><span class="value">${data.ip ?? '—'}</span></div>
+      <div class="row"><span class="label">City</span><span class="value">${data.city ?? '—'}</span></div>
+      <div class="row"><span class="label">Region</span><span class="value">${data.region ?? '—'}</span></div>
+      <div class="row"><span class="label">Country</span><span class="value">${data.country_name ?? '—'}</span></div>
+      <div class="row"><span class="label">Postal Code</span><span class="value">${data.postal ?? '—'}</span></div>
+      <div class="row"><span class="label">Latitude</span><span class="value">${data.latitude ?? '—'}</span></div>
+      <div class="row"><span class="label">Longitude</span><span class="value">${data.longitude ?? '—'}</span></div>
+      <div class="row"><span class="label">Timezone</span><span class="value">${data.timezone ?? '—'}</span></div>
+      <div class="row"><span class="label">ISP</span><span class="value">${data.org ?? '—'}</span></div>
+    `;
+  } catch (err) {
+    content.innerHTML = '';
+    document.getElementById('error').textContent =
+      'Could not fetch IP location. The lookup service may be rate-limited or blocked — try again shortly.';
+  }
+}
+
+function getPreciseLocation() {
+  const btn = document.getElementById('preciseBtn');
+  const errorEl = document.getElementById('error');
+  errorEl.textContent = '';
+
+  if (!navigator.geolocation) {
+    errorEl.textContent = 'Geolocation API is not supported in this browser.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Requesting permission…';
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const { latitude, longitude, accuracy } = pos.coords;
+      const content = document.getElementById('content');
+      content.innerHTML += `
+        <div class="row"><span class="label">Precise Latitude</span><span class="value">${latitude.toFixed(6)}</span></div>
+        <div class="row"><span class="label">Precise Longitude</span><span class="value">${longitude.toFixed(6)}</span></div>
+        <div class="row"><span class="label">Accuracy</span><span class="value">±${Math.round(accuracy)} m</span></div>
+      `;
+      btn.textContent = 'Precise location added above';
+    },
+    (err) => {
+      errorEl.textContent = 'Permission denied or unavailable: ' + err.message;
+      btn.disabled = false;
+      btn.textContent = 'Use precise GPS location instead';
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+}
+
+loadIpLocation();
+</script>
+
+</body>
+</html>

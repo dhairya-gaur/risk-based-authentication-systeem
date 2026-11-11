@@ -25,7 +25,7 @@ a{text-decoration:none;color:inherit}
 .nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(7,11,20,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .nav-inner{max-width:1150px;margin:auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:"Space Grotesk";font-size:1.35rem;font-weight:700}.logo span{color:var(--cyan)}
-.links{display:flex;gap:26px;color:#b7c4d8;font-size:.92rem}.links a:hover{color:var(--cyan)}
+.links{display:flex;gap:26px;color:#b7c4d8;font-size:.92rem;max-width:1150px;margin:auto;padding:18px 24px}.links a:hover{color:var(--cyan)}
 .hero{min-height:100vh;display:grid;place-items:center;padding:130px 24px 80px;position:relative;overflow:hidden}
 .hero-grid{max-width:1150px;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
 .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(54,231,255,.25);background:rgba(54,231,255,.06);padding:8px 13px;border-radius:999px;color:#a9f6ff;font-size:.82rem;margin-bottom:20px}
@@ -33,9 +33,9 @@ a{text-decoration:none;color:inherit}
 h1{font-family:"Space Grotesk";font-size:clamp(3rem,7vw,5.7rem);line-height:.98;letter-spacing:-.06em}
 .gradient{background:linear-gradient(100deg,var(--cyan),#b8f7ff 40%,#a78bfa);-webkit-background-clip:text;color:transparent}
 .hero p{max-width:650px;color:var(--muted);font-size:1.08rem;margin:25px 0 30px}
-.buttons{display:flex;gap:14px;flex-wrap:wrap}.btn{padding:13px 19px;border-radius:11px;font-weight:700;border:1px solid var(--border);transition:.2s}
+.buttons{display:flex;gap:14px;flex-wrap:wrap}.btn{padding:13px 19px;border-radius:11px;font-weight:700;border:1px solid var(--border);transition:.2s;cursor:pointer}
 .primary{background:var(--cyan);color:#031018}.primary:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(54,231,255,.2)}
-.secondary:hover{border-color:rgba(54,231,255,.45)}
+.secondary{background:rgba(255,255,255,.06);color:var(--text)}.secondary:hover{border-color:rgba(54,231,255,.45)}
 .dashboard{position:relative;background:linear-gradient(145deg,rgba(17,27,44,.95),rgba(9,15,27,.95));border:1px solid var(--border);border-radius:24px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.45);animation:float 5s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-8px)}}
 .window{display:flex;gap:7px;margin-bottom:20px}.window i{width:9px;height:9px;border-radius:50%;background:#46556d}
@@ -70,9 +70,10 @@ footer{padding:35px 24px;border-top:1px solid var(--border);color:#73839a;text-a
     <a href="#about">About</a>
     <a href="#architecture">Architecture</a>
     <a href="#features">Features</a>
-    <a href="#demo">Demo</a>
+    <a href="#login-auth">RBA Login</a>
+    <a href="#demo">Role Demo</a>
     <a href="ip-checker.html">IP Checker</a>
-</div>
+  </div>
 </nav>
 
 <header class="hero">
@@ -80,9 +81,9 @@ footer{padding:35px 24px;border-top:1px solid var(--border);color:#73839a;text-a
     <div>
       <div class="badge"><span class="dot"></span> MINI PROJECT · CYBER SECURITY</div>
       <h1>Secure access.<br><span class="gradient">Smarter control.</span></h1>
-      <p>RBA — Role-Based Access Control — is a cybersecurity approach that gives users only the permissions required for their role, reducing unauthorized access and improving system security.</p>
+      <p>RBA — Role & Risk-Based Access Control — evaluates user authenticity, dynamically grades login security out of 100, and restricts unauthorized access.</p>
       <div class="buttons">
-        <a class="btn primary" href="#demo">Try the Demo →</a>
+        <a class="btn primary" href="#login-auth">Try RBA Login →</a>
         <a class="btn secondary" href="#architecture">Explore Architecture</a>
       </div>
     </div>
@@ -101,54 +102,74 @@ footer{padding:35px 24px;border-top:1px solid var(--border);color:#73839a;text-a
 
 <section id="about">
 <div class="container">
-  <div class="section-head"><div class="eyebrow">01 / The Concept</div><h2>Why Role-Based Access?</h2><p>Instead of managing permissions for every user individually, RBA groups permissions around job roles. This makes access easier to manage, audit, and secure.</p></div>
+  <div class="section-head"><div class="eyebrow">01 / The Concept</div><h2>Why Role & Risk-Based Access?</h2><p>Instead of static passwords, RBA uses identity verification and real-time security grading to stop intruders and bot attacks.</p></div>
   <div class="grid3">
     <div class="feature"><div class="icon">🎯</div><h3>Least Privilege</h3><p>Users receive only the access needed to perform their responsibilities, limiting unnecessary exposure.</p></div>
-    <div class="feature"><div class="icon">🧩</div><h3>Simple Management</h3><p>Assign a role once and manage its permissions centrally instead of configuring every account separately.</p></div>
-    <div class="feature"><div class="icon">📊</div><h3>Better Auditing</h3><p>Role and permission mappings make it easier to review who can access sensitive resources.</p></div>
+    <div class="feature"><div class="icon">🧩</div><h3>Risk-Based Grading</h3><p>Assigns a real-time trust score out of 100 based on failed attempts and network behavior.</p></div>
+    <div class="feature"><div class="icon">📊</div><h3>Better Auditing</h3><p>Tracks repeated wrong OTP attempts and automatically blocks suspicious sessions.</p></div>
   </div>
 </div>
 </section>
 
 <section id="architecture">
 <div class="container">
-  <div class="section-head"><div class="eyebrow">02 / Architecture</div><h2>How RBA works</h2><p>A simple flow from identity to permission.</p></div>
+  <div class="section-head"><div class="eyebrow">02 / Architecture</div><h2>How RBA Works</h2><p>A simple verification flow from identity to trust score.</p></div>
   <div class="arch">
     <div class="diagram">
       <div class="flow">
-        <div class="flow-item"><b>01 · USER</b><span>Employee / Student / Operator signs in.</span></div>
-        <div class="flow-item"><b>02 · AUTHENTICATION</b><span>System verifies the user's identity.</span></div>
-        <div class="flow-item"><b>03 · ROLE</b><span>User is mapped to an assigned role.</span></div>
-        <div class="flow-item"><b>04 · PERMISSIONS</b><span>Role determines allowed resources and actions.</span></div>
+        <div class="flow-item"><b>01 · USER REQUEST</b><span>User enters registered Gmail address.</span></div>
+        <div class="flow-item"><b>02 · OTP DISPATCH</b><span>Backend generates a 4-digit code and calculates starting trust score (100).</span></div>
+        <div class="flow-item"><b>03 · RISK SCORING</b><span>Deducts 25 points on every incorrect guess or IP change.</span></div>
+        <div class="flow-item"><b>04 · VERIFICATION DECISION</b><span>Grants access if score ≥ 50, otherwise flags and blocks access.</span></div>
       </div>
     </div>
     <div class="diagram">
-      <h3>Security principles</h3>
+      <h3>Security Principles</h3>
       <div class="checks">
-        <div class="check"><b>✓</b> Centralized permission management</div>
-        <div class="check"><b>✓</b> Reduced privilege escalation risk</div>
-        <div class="check"><b>✓</b> Clear separation of responsibilities</div>
-        <div class="check"><b>✓</b> Easier access reviews and auditing</div>
+        <div class="check"><b>✓</b> Direct Gmail OTP Verification</div>
+        <div class="check"><b>✓</b> Dynamic 0–100 Trust Score Evaluation</div>
+        <div class="check"><b>✓</b> 3-Strike Automatic Lockout</div>
+        <div class="check"><b>✓</b> Prevents brute-force credential stuffing</div>
       </div>
     </div>
   </div>
 </div>
 </section>
 
-<section id="features">
-<div class="container">
-  <div class="section-head"><div class="eyebrow">03 / Core Features</div><h2>Built for secure systems.</h2></div>
-  <div class="grid3">
-    <div class="feature"><div class="icon">🔑</div><h3>Authentication</h3><p>Identify users before any protected resource is accessed.</p></div>
-    <div class="feature"><div class="icon">🛂</div><h3>Authorization</h3><p>Check whether the user's assigned role permits a requested action.</p></div>
-    <div class="feature"><div class="icon">📝</div><h3>Audit Logs</h3><p>Record access decisions to support monitoring and security reviews.</p></div>
+<!-- NEW: RBA GMAIL OTP & TRUST SCORE SECTION -->
+<section id="login-auth">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">03 / Live Authentication</div>
+      <h2>Gmail OTP & Risk Verification</h2>
+      <p>Enter your Gmail to receive a code. Each wrong guess reduces your trust score by 25 points.</p>
+    </div>
+
+    <div class="demo">
+      <div class="demo-form">
+        <label for="userEmail">Enter Your Gmail</label>
+        <input type="email" id="userEmail" placeholder="student@gmail.com" />
+        <button class="btn secondary" onclick="handleSendOtp()">Get OTP →</button>
+
+        <label for="userOtp" style="margin-top:10px;">Enter 4-Digit OTP</label>
+        <input type="text" id="userOtp" placeholder="e.g. 4821" maxlength="4" />
+        <button class="btn primary" onclick="handleVerifyOtp()">Verify & Login</button>
+      </div>
+
+      <div class="result" id="loginResult">
+        <div>
+          <div class="shield">🛡️</div>
+          <h3>System Ready</h3>
+          <p>Request an OTP to initiate security scoring.</p>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 </section>
 
 <section id="demo">
 <div class="container">
-  <div class="section-head"><div class="eyebrow">04 / Interactive Demo</div><h2>Test an access decision.</h2><p>Select a role and action to see a simplified RBA authorization result.</p></div>
+  <div class="section-head"><div class="eyebrow">04 / Interactive RBAC Demo</div><h2>Test Role Permissions</h2><p>Select a role and action to see a simplified RBAC authorization result.</p></div>
   <div class="demo">
     <div class="demo-form">
       <label for="role">Select Role</label>
@@ -163,60 +184,30 @@ footer{padding:35px 24px;border-top:1px solid var(--border);color:#73839a;text-a
   </div>
 </div>
 </section>
+
 <section id="ip-location">
     <div class="container">
-
         <div class="section-head">
             <div class="eyebrow">05 / IP INTELLIGENCE</div>
-
-            <h2>
-                Track IP Location
-            </h2>
-
-            <p>
-                Explore our IP Location Checker module to view
-                geographical and network information associated
-                with an IP address.
-            </p>
+            <h2>Track IP Location</h2>
+            <p>Explore our IP Location Checker module to view geographical and network information.</p>
         </div>
 
-        <div class="feature" style="
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            gap:30px;
-            padding:35px;
-        ">
-
+        <div class="feature" style="display:flex;align-items:center;justify-content:space-between;gap:30px;padding:35px;">
             <div>
-                <div style="font-size:40px; margin-bottom:10px;">
-                    🌍
-                </div>
-
-                <h3 style="font-size:24px; margin-bottom:10px;">
-                    IP Location Checker
-                </h3>
-
-                <p>
-                    Check an IP address and explore its approximate
-                    location, ISP, region and network information.
-                </p>
+                <div style="font-size:40px; margin-bottom:10px;">🌍</div>
+                <h3 style="font-size:24px; margin-bottom:10px;">IP Location Checker</h3>
+                <p>Check an IP address and explore its approximate location, ISP, region and network information.</p>
             </div>
-
-            <a href="page2.html"
-               class="btn primary"
-               style="white-space:nowrap;">
-                Open IP Checker →
-            </a>
-
+            <a href="ip-checker.html" class="btn primary" style="white-space:nowrap;">Open IP Checker →</a>
         </div>
-
     </div>
 </section>
 
-<footer>RBA CyberShield · Cyber Security Mini Project · Built with HTML & CSS + a small JavaScript demo</footer>
+<footer>RBA CyberShield · Cyber Security Mini Project · Built with HTML, CSS, JavaScript & Node.js</footer>
 
 <script>
+// 1. Role-based check logic (Original)
 function checkAccess(){
   const role=document.getElementById('role').value;
   const action=document.getElementById('action').value;
@@ -230,6 +221,66 @@ function checkAccess(){
   document.getElementById('result').innerHTML=allowed
     ? `<div><div class="shield">🟢</div><h3 style="color:#45f0a3">ACCESS GRANTED</h3><p>${role} is authorized to ${action.toLowerCase()}.</p></div>`
     : `<div><div class="shield">🔴</div><h3 style="color:#ff7185">ACCESS DENIED</h3><p>${role} does not have permission to ${action.toLowerCase()}.</p></div>`;
+}
+
+// 2. Risk & OTP Check Logic (New)
+async function handleSendOtp() {
+  const email = document.getElementById('userEmail').value.trim();
+  const resultDiv = document.getElementById('loginResult');
+  
+  if(!email) {
+    alert('Please enter your Gmail address!');
+    return;
+  }
+
+  resultDiv.innerHTML = '<p>Generating code & sending via Gmail...</p>';
+
+  try {
+    const res = await fetch('http://localhost:5000/send-otp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+
+    if(data.success) {
+      resultDiv.innerHTML = `<div><div class="shield">✉️</div><h3 style="color:#45f0a3">OTP Sent!</h3><p>${data.message}</p><p>Trust Score: <b>${data.trustScore}/100</b></p></div>`;
+    } else {
+      resultDiv.innerHTML = `<div><div class="shield">⚠️</div><h3 style="color:#ff7185">Blocked</h3><p>${data.message}</p></div>`;
+    }
+  } catch(err) {
+    resultDiv.innerHTML = `<p style="color:#ff7185">Could not connect to backend server. Make sure "node server.js" is running!</p>`;
+  }
+}
+
+async function handleVerifyOtp() {
+  const email = document.getElementById('userEmail').value.trim();
+  const otp = document.getElementById('userOtp').value.trim();
+  const resultDiv = document.getElementById('loginResult');
+
+  if(!email || !otp) {
+    alert('Please enter both your email and the OTP received!');
+    return;
+  }
+
+  try {
+    const res = await fetch('http://localhost:5000/verify-otp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, otp })
+    });
+    const data = await res.json();
+
+    if(data.status === 'GRANTED') {
+      resultDiv.innerHTML = `<div><div class="shield">🟢</div><h3 style="color:#45f0a3">ACCESS GRANTED</h3><p>${data.message}</p><p>Final Grade: <b style="color:#45f0a3">${data.score}/100</b></p></div>`;
+    } else if(data.status === 'BLOCKED') {
+      resultDiv.innerHTML = `<div><div class="shield">🔴</div><h3 style="color:#ff7185">SUSPICIOUS - BLOCKED</h3><p>${data.message}</p><p>Final Grade: <b style="color:#ff7185">${data.score}/100</b></p></div>`;
+    } else {
+      resultDiv.innerHTML = `<div><div class="shield">⚠️</div><h3 style="color:#ffb84d">ATTEMPT FAILED</h3><p>${data.message}</p><p>Penalty applied. New Score: <b>${data.score}/100</b></p></div>`;
+    }
+  } catch(err) {
+    resultDiv.innerHTML = `<p style="color:#ff7185">Error contacting verification server.</p>`;
+  }
 }
 </script>
 </body>

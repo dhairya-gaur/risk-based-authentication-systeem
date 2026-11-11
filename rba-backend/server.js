@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto'); // built into Node, no install needed
+const path = require('path');     // built into Node
 
 // Credentials are read from the terminal session (never stored in this file)
 const EMAIL_USER = process.env.EMAIL_USER;
@@ -18,6 +19,14 @@ if (!EMAIL_USER || !EMAIL_PASS) {
 const app = express();
 app.use(cors());
 app.use(express.json());
+// Serve your existing site: frontend/index.html opens at http://localhost:5000
+const FRONTEND = path.join(__dirname, '..', 'frontend');
+app.use(express.static(FRONTEND));
+
+// Your nav links to ip-checker.html, so point it at ip_location/location.html
+app.get('/ip-checker.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'ip_location', 'location.html'));
+});
 app.set('trust proxy', true);
 
 const transporter = nodemailer.createTransport({
@@ -35,11 +44,6 @@ const OTP_TTL_MS = 5 * 60 * 1000;
 function getIp(req) {
   return (req.ip || '').replace('::ffff:', '');
 }
-
-// Test route so http://localhost:5000 shows something
-app.get('/', (req, res) => {
-  res.send('RBA backend is working');
-});
 
 // 1. Send OTP
 app.post('/send-otp', async (req, res) => {
